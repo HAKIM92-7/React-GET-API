@@ -12,7 +12,7 @@ const UserList = () => {
         const result = await axios.get(
             "https://jsonplaceholder.typicode.com/users"
         );
-            setUsers(...users,result.data);
+            setUsers(result.data);
         };
         fetchData();
         }, []);
