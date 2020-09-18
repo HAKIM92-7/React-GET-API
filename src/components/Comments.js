@@ -3,16 +3,18 @@ import axios from "axios";
 import 'bootstrap/dist/css/bootstrap.css';
 import './UserList.css';
 
-const UserList = () => {
+const  Comments = (props) => {
+
+    console.log("this is my param", props.match.params.id);
     
-    const [users,setUsers]=useState([]);
+    const [comments ,setComments]=useState([]);
 
     useEffect(() => {
         const fetchData = async () => {
         const result = await axios.get(
-            "https://jsonplaceholder.typicode.com/users"
+            "https://jsonplaceholder.typicode.com/comments?postId="+props.match.params.id 
         );
-            setUsers(result.data);
+            setComments(result.data);
         };
         fetchData();
         }, []);
@@ -21,16 +23,14 @@ const UserList = () => {
     return (
         <div>
     
-    <h2>Users List</h2>    
-     {users.map(el => (
+    <h2>{`Comments of post ${props.match.params.id }`}</h2>    
+     {comments.map(el => (
        
    <div className="card" style={{width: '18rem'}}>
      
   <ul className="list-group list-group-flush">
-    <li className="list-group-item">Name: {el.name}</li>
-    <li className="list-group-item">User Name : {el.username}</li>
-    <li className="list-group-item">Email : {el.email}</li>
-    <li className="list-group-item">Adress: {el.address.street} {el.address.suite} {el.address.city}</li>
+    <li className="list-group-item"> {el.email}</li>
+    <li className="list-group-item"> {el.body}</li>
   </ul>
 </div>
 
@@ -42,4 +42,4 @@ const UserList = () => {
     )
 }
 
-export default UserList
+export default Comments
